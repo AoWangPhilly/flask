@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="/static/css/base.css" />
+</head>
+
+<body class="bg-light">
+    <div class="container">
+        <img src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif" alt="Love Bear" />
+        <h1 id="valentineText" class="text-4xl my-4">Will you be my Valentine?</h1>
+
+        <div class="buttons">
+            <button id="yes-button" class="button">Yes</button>
+            <button class="button" onclick="increaseFontSize()">No</button>
+        </div>
+    </div>
+
+    <script src="/static/lib/jquery/jquery.min.js"></script>
+    <script src="/static/lib/popper/popper.min.js"></script>
+    <script src="/static/lib/bootstrap/bootstrap.min.js"></script>
+    <script>
+        let fontSize = 16;
+
+        function increaseFontSize() {
+            fontSize += 5; // You can adjust the increment value as needed
+            document.getElementById('yes-button').style.fontSize = fontSize + 'px';
+        }
+    </script>
+</body>
+
+</html>
