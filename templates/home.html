@@ -3,31 +3,101 @@
 
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="static/css/base.css" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link rel="stylesheet" href="/static/lib/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="/static/css/base.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        button {
+            transition: 0.5s transform;
+            /* Moved transition property to default styling */
+        }
+
+        .move {
+            transition: 0.5s transform;
+        }
+    </style>
 </head>
 
-<body class="bg-light">
+<body>
     <div class="container">
-        <img src="https://gifdb.com/images/high/cute-love-bear-roses-ou7zho5oosxnpo6k.gif" alt="Love Bear" />
-        <h1 id="valentineText" class="text-4xl my-4">Will you be my Valentine?</h1>
+        <img id="valentine-image"
+            src="https://gifdb.com/images/high/bear-love-bouncing-mocha-with-flowers-n4m0fyne6h4e6y2x.gif"
+            alt="Love Bear" />
+        <h1 id="valentine-text" class="text-4xl my-4">Will you be my Valentine?</h1>
 
-        <div class="buttons">
-            <button id="yes-button" class="button">Yes</button>
-            <button class="button" onclick="increaseFontSize()">No</button>
+        <div>
+            <button id="yes-button" class="btn btn-success m-2" onclick="changeTextAndImage()">Yes</button>
+            <button id="no-button" class="btn btn-danger m-2" onclick="changeNoText()">No</button>
         </div>
     </div>
 
-    <script src="/static/lib/jquery/jquery.min.js"></script>
-    <script src="/static/lib/popper/popper.min.js"></script>
-    <script src="/static/lib/bootstrap/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <script>
         let fontSize = 16;
+        let currentPhraseIndex = 0;
 
-        function increaseFontSize() {
-            fontSize += 5; // You can adjust the increment value as needed
-            document.getElementById('yes-button').style.fontSize = fontSize + 'px';
+        const phrases = [
+            "Are you sure?",
+            "Really sure?",
+            "Think again!",
+            "Last chance!",
+            "Surely not?",
+            "You might regret this!",
+            "Give it another thought!",
+            "Are you absolutely certain?",
+            "This could be a mistake!",
+            "Have a heart!",
+            "Don't be so cold!",
+            "Change of heart?",
+            "Wouldn't you reconsider?",
+            "Is that your final answer?",
+            "You're breaking my heart ;(",
+        ];
+
+        function changeNoText() {
+            let noButton = document.getElementById('no-button');
+            let yesButton = document.getElementById('yes-button');
+
+            noButton.innerText = phrases[currentPhraseIndex];
+            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+
+            fontSize += 5;
+            yesButton.style.fontSize = fontSize + 'px';
+            noButton.classList.add('move');
+
+            const screenHeight = window.innerHeight;
+            const screenWidth = window.innerWidth;
+
+            noButton.addEventListener("click", () => {
+                let randY = Math.floor(Math.random() * (screenHeight - noButton.clientHeight));
+                let randX = Math.floor(Math.random() * (screenWidth - noButton.clientWidth));
+
+                // Clamp the values to ensure the button stays within the screen
+                randY = Math.max(0, randY) / 5;
+                randX = Math.max(0, randX) / 5;
+
+                randY = Math.min(screenHeight - noButton.clientHeight, randY);
+                randX = Math.min(screenWidth - noButton.clientWidth, randX);
+
+                noButton.style.transform = `translate(${randX}px, ${randY}px)`;
+            });
+        }
+
+        function changeTextAndImage() {
+            document.getElementById("valentine-image").src = "https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
+            document.getElementById("valentine-text").innerText = "Yay! See you on the 14th baby 😊❤️"
+            document.getElementById("no-button").remove()
+            document.getElementById("yes-button").remove()
         }
     </script>
 </body>
